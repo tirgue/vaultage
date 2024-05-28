@@ -56,7 +56,7 @@ export class EncryptionService {
   hex2ascii(hex: string): string {
     let ascii = '';
 
-    for (var i = 0; i < hex.length; i += 2) {
+    for (let i = 0; i < hex.length; i += 2) {
       const part = hex.substring(i, i + 2);
       const ch = String.fromCharCode(parseInt(part, 16));
       ascii += ch;

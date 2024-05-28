@@ -1,4 +1,4 @@
-import { ContentCopy, CopyAll } from '@mui/icons-material';
+import { ContentCopy } from '@mui/icons-material';
 import { Box, IconButton, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { PassGeneratorService } from './services/PassGenerator.service';
