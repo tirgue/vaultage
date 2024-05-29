@@ -1,3 +1,4 @@
+import { inject, injectable } from 'inversify';
 import { EncryptionService } from './Encryption.service';
 
 export class PassGeneratorFilterException extends Error {
@@ -6,9 +7,12 @@ export class PassGeneratorFilterException extends Error {
   }
 }
 
+@injectable()
 export class PassGeneratorService {
-  protected readonly encryptionService: EncryptionService =
-    new EncryptionService();
+  constructor(
+    @inject(EncryptionService)
+    protected readonly encryptionService: EncryptionService
+  ) {}
 
   /**
    * Split Hexadecimal in groups of 2 numbers to filter non-printable char
