@@ -1,9 +1,12 @@
-import { ContentCopy } from '@mui/icons-material';
+import { ContentCopy, Delete } from '@mui/icons-material';
 import {
   Box,
   Button,
+  Card,
+  CardContent,
   Chip,
   Divider,
+  Grid,
   IconButton,
   List,
   ListItem,
@@ -13,7 +16,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useInjection } from './hooks';
 import { PassGeneratorService } from './services';
-import { addSwitcher } from './state/cabinet.slice';
+import { addSwitcher, deleteSwitcher } from './state/cabinet.slice';
 import { useAppDispatch, useAppSelector } from './state/store';
 
 function App() {
@@ -50,12 +53,32 @@ function App() {
     );
   };
 
+  const handleDeleteSwitcher = (switcherKey: string) => {
+    dispatch(deleteSwitcher(switcherKey));
+  };
+
+  const copyPassword = (generatedPassword: string) =>
+    navigator.clipboard.writeText(generatedPassword);
+
+  const handleCopySwitcherPassword = async (
+    masterPassword: string,
+    key: string,
+    length: number
+  ) => {
+    const generatedPassword = await passGeneratorService.generatePassword(
+      masterPassword,
+      key,
+      length
+    );
+    copyPassword(generatedPassword);
+  };
+
   return (
-    <Box sx={{ m: 3 }}>
+    <Box sx={{ m: 3 }} display={'flex'} flexDirection={'column'} gap={1}>
       <Typography variant="h2" sx={{ mb: 5 }}>
         Vaultage Demo
       </Typography>
-      <Divider sx={{ m: 2 }} textAlign="left">
+      <Divider textAlign="left">
         <Chip label="Master Password" size="small" />
       </Divider>
       <TextField
@@ -66,7 +89,7 @@ function App() {
         fullWidth
         onChange={(e) => setMasterPassword(e.target.value)}
       />
-      <Divider sx={{ m: 2 }} textAlign="left">
+      <Divider textAlign="left">
         <Chip label="Switcher" size="small" />
       </Divider>
       <TextField
@@ -85,11 +108,10 @@ function App() {
         fullWidth
         onChange={(e) => setSwitcherKey(e.target.value)}
       />
-      <Box display={'flex'} alignItems={'center'}>
+      <Box display={'flex'} alignItems={'center'} gap={3}>
         <TextField
           label="Password Length"
           value={length}
-          sx={{ mr: 3 }}
           size="small"
           margin="dense"
           type="number"
@@ -99,18 +121,15 @@ function App() {
           Add Switcher
         </Button>
       </Box>
-      <Divider sx={{ m: 2 }} textAlign="left">
+      <Divider textAlign="left">
         <Chip label="Generated Password" size="small" />
       </Divider>
-      <Box display={'flex'} alignItems={'center'}>
-        <IconButton
-          onClick={() => navigator.clipboard.writeText(generatedPassword)}
-        >
+      <Box display={'flex'} alignItems={'center'} gap={1}>
+        <IconButton onClick={() => copyPassword.bind(generatedPassword)}>
           <ContentCopy />
         </IconButton>
         <TextField
           label="Generated Password"
-          contentEditable="plaintext-only"
           size="small"
           margin="dense"
           fullWidth
@@ -118,18 +137,49 @@ function App() {
           value={generatedPassword}
         />
       </Box>
-      <Divider sx={{ m: 2 }} textAlign="left">
+      <Divider textAlign="left">
         <Chip label="Saved Switchers" size="small" />
       </Divider>
-      <Box display={'flex'} alignItems={'center'}>
-        <List>
-          {Object.values(cabinet).map(({ key, length, name }) => (
-            <ListItem key={key}>
-              {name} - {key} - {length}
-            </ListItem>
-          ))}
-        </List>
-      </Box>
+      <Grid container spacing={1}>
+        {Object.values(cabinet).map(({ key, length, name }) => (
+          <Grid item key={key}>
+            <Card>
+              <CardContent>
+                <List>
+                  <ListItem sx={{ p: 1 }}>
+                    <Box display={'flex'} gap={1} alignItems={'center'}>
+                      <Typography variant="h5">{name}</Typography>
+                      <IconButton onClick={() => handleDeleteSwitcher(key)}>
+                        <Delete />
+                      </IconButton>
+                    </Box>
+                  </ListItem>
+                  <ListItem sx={{ p: 1 }}>
+                    <Typography>&bull; Key : {key}</Typography>
+                  </ListItem>
+                  <ListItem sx={{ p: 1 }}>
+                    <Typography>&bull; Length : {length}</Typography>
+                  </ListItem>
+                  <ListItem sx={{ p: 1 }}>
+                    <Button
+                      variant="contained"
+                      onClick={() =>
+                        handleCopySwitcherPassword(
+                          masterPassword,
+                          key,
+                          length
+                        ).catch(console.error)
+                      }
+                    >
+                      Copy Password
+                    </Button>
+                  </ListItem>
+                </List>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
     </Box>
   );
 }

@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { Cabinet, Switcher } from '../types';
 
-const initialState: Cabinet = {};
+const initialState: Cabinet = JSON.parse(localStorage.getItem('root') ?? '{}');
 
 export const cabinetSlice = createSlice({
   name: 'cabinet',
@@ -10,9 +10,12 @@ export const cabinetSlice = createSlice({
     addSwitcher: (state, { payload: switcher }: PayloadAction<Switcher>) => {
       state[switcher.key] = switcher;
     },
+    deleteSwitcher: (state, { payload: key }: PayloadAction<string>) => {
+      delete state[key];
+    },
   },
 });
 
-export const { addSwitcher } = cabinetSlice.actions;
+export const { addSwitcher, deleteSwitcher } = cabinetSlice.actions;
 
 export default cabinetSlice.reducer;
