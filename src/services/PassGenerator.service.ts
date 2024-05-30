@@ -40,7 +40,8 @@ export class PassGeneratorService {
    */
   async generatePassword(
     masterPassword: string,
-    switcher: string
+    switcher: string,
+    length?: number
   ): Promise<string> {
     const encryptedLayer = await this.encryptionService.sha256(
       `${switcher}${masterPassword}`
@@ -50,7 +51,8 @@ export class PassGeneratorService {
     const hexadecimalLayer = this.encryptionService.hexEncode(base64Layer);
     const integerLayer = this.encryptionService.hex2int(hexadecimalLayer);
     const filteredLayer = this.filterHex(integerLayer);
+    const password = this.encryptionService.hex2ascii(filteredLayer);
 
-    return this.encryptionService.hex2ascii(filteredLayer);
+    return password.slice(0, length)
   }
 }
