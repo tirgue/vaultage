@@ -1,1 +1,1 @@
-export * from './useContextAPIService.hook';
+export * from './useInjection';

@@ -1,7 +1,7 @@
 import { ContentCopy } from '@mui/icons-material';
 import { Box, IconButton, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useContextAPIService } from './hooks';
+import { useInjection } from './hooks';
 import { PassGeneratorService } from './services';
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
   const [switcher, setSwitcher] = useState('');
   const [generatedPassword, setGeneratedPassword] = useState('');
 
-  const passGeneratorService = useContextAPIService(PassGeneratorService);
+  const passGeneratorService = useInjection(PassGeneratorService);
 
   useEffect(() => {
     const fn = async () => {
