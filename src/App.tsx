@@ -1,4 +1,4 @@
-import { ContentCopy } from '@mui/icons-material';
+import { ContentCopy, Shuffle } from '@mui/icons-material';
 import {
   Box,
   Button,
@@ -54,6 +54,10 @@ function App() {
     dispatch(deleteSwitcher(switcherKey));
   };
 
+  const handleRandomSwitcherKey = () => {
+    setSwitcherKey(Math.random().toString(36).slice(2));
+  };
+
   return (
     <Box sx={{ m: 3 }} display={'flex'} flexDirection={'column'} gap={1}>
       <Typography variant="h2" sx={{ mb: 5 }}>
@@ -81,14 +85,19 @@ function App() {
         fullWidth
         onChange={(e) => setSwitcherName(e.target.value)}
       />
-      <TextField
-        label="Key"
-        value={switcherKey}
-        size="small"
-        margin="dense"
-        fullWidth
-        onChange={(e) => setSwitcherKey(e.target.value)}
-      />
+      <Box display={'flex'} gap={1} alignItems={'center'}>
+        <IconButton onClick={handleRandomSwitcherKey}>
+          <Shuffle />
+        </IconButton>
+        <TextField
+          label="Key"
+          value={switcherKey}
+          size="small"
+          margin="dense"
+          fullWidth
+          onChange={(e) => setSwitcherKey(e.target.value)}
+        />
+      </Box>
       <Box display={'flex'} alignItems={'center'} gap={3}>
         <TextField
           label="Password Length"
