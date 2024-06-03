@@ -54,16 +54,6 @@ function App() {
     dispatch(deleteSwitcher(switcherKey));
   };
 
-  const copyPassword = (generatedPassword: string) =>
-    navigator.clipboard.writeText(generatedPassword);
-
-  const handleCopySwitcherPassword = (key: string, length: number) => {
-    passGeneratorService
-      .generatePassword(masterPassword, key, length)
-      .then(copyPassword)
-      .catch(console.error);
-  };
-
   return (
     <Box sx={{ m: 3 }} display={'flex'} flexDirection={'column'} gap={1}>
       <Typography variant="h2" sx={{ mb: 5 }}>
@@ -116,7 +106,9 @@ function App() {
         <Chip label="Generated Password" size="small" />
       </Divider>
       <Box display={'flex'} alignItems={'center'} gap={1}>
-        <IconButton onClick={() => copyPassword(generatedPassword)}>
+        <IconButton
+          onClick={() => navigator.clipboard.writeText(generatedPassword)}
+        >
           <ContentCopy />
         </IconButton>
         <TextField
@@ -138,7 +130,7 @@ function App() {
               length={length}
               name={name}
               switchKey={key}
-              onCopyPassword={handleCopySwitcherPassword}
+              masterPassword={masterPassword}
               onDeleteSwitch={handleDeleteSwitcher}
             />
           </Grid>

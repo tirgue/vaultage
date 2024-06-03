@@ -1,30 +1,68 @@
-import { Delete } from '@mui/icons-material';
+import {
+  ContentCopy,
+  Delete,
+  Visibility,
+  VisibilityOff,
+} from '@mui/icons-material';
 import {
   Box,
-  Button,
   Card,
   CardContent,
   IconButton,
   List,
   ListItem,
+  TextField,
   Typography,
 } from '@mui/material';
+import { useEffect, useMemo, useState } from 'react';
+import { useInjection } from '../../hooks';
+import { PassGeneratorService } from '../../services';
 
 export type SwitcherProps = {
   name: string;
   switchKey: string;
   length: number;
+  masterPassword?: string;
   onDeleteSwitch: (switchKey: string) => void;
-  onCopyPassword: (switchKey: string, length: number) => void;
 };
 
 export const Switcher = ({
   length,
   name,
   switchKey,
+  masterPassword = '',
   onDeleteSwitch,
-  onCopyPassword,
 }: SwitcherProps) => {
+  const [generatedPassword, setGeneratedPassword] = useState('');
+  const [visible, setVisible] = useState(false);
+
+  const passGeneratorService = useInjection(PassGeneratorService);
+
+  const generatedPasswordVisual = useMemo(
+    () =>
+      visible
+        ? generatedPassword
+        : Array(generatedPassword.length).fill('•').join(''),
+    [generatedPassword, visible],
+  );
+
+  useEffect(() => {
+    const fn = async () => {
+      const generatedPassword = await passGeneratorService.generatePassword(
+        masterPassword,
+        switchKey,
+        length,
+      );
+
+      setGeneratedPassword(generatedPassword);
+    };
+
+    fn();
+  }, [length, masterPassword, passGeneratorService, switchKey]);
+
+  const handleCopyPassword = () => {
+    navigator.clipboard.writeText(generatedPassword).catch(console.error);
+  };
   return (
     <Card>
       <CardContent>
@@ -44,12 +82,24 @@ export const Switcher = ({
             <Typography>&bull; Length : {length}</Typography>
           </ListItem>
           <ListItem sx={{ p: 1 }}>
-            <Button
-              variant="contained"
-              onClick={() => onCopyPassword(switchKey, length)}
-            >
-              Copy Password
-            </Button>
+            <Box display={'flex'} gap={1} alignItems={'center'} width="100%">
+              <IconButton onClick={handleCopyPassword}>
+                <ContentCopy />
+              </IconButton>
+              <IconButton onClick={() => setVisible((v) => !v)}>
+                {visible ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+              <TextField
+                size="small"
+                margin="dense"
+                sx={{ input: { cursor: 'pointer' } }}
+                fullWidth
+                InputProps={{ readOnly: true }}
+                InputLabelProps={{ style: { fontFamily: 'monospace' } }}
+                value={generatedPasswordVisual}
+                onClick={handleCopyPassword}
+              />
+            </Box>
           </ListItem>
         </List>
       </CardContent>

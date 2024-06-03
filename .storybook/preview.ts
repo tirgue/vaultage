@@ -4,8 +4,6 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import { withThemeFromJSXProvider } from '@storybook/addon-themes';
 import { darkTheme } from '../src/themes';
 
-/* snipped for brevity */
-
 export const decorators = [
   withThemeFromJSXProvider({
     themes: {
