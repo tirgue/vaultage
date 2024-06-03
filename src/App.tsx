@@ -1,19 +1,16 @@
-import { ContentCopy, Delete } from '@mui/icons-material';
+import { ContentCopy } from '@mui/icons-material';
 import {
   Box,
   Button,
-  Card,
-  CardContent,
   Chip,
   Divider,
   Grid,
   IconButton,
-  List,
-  ListItem,
   TextField,
   Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { Switcher } from './components';
 import { useInjection } from './hooks';
 import { PassGeneratorService } from './services';
 import { addSwitcher, deleteSwitcher } from './state/cabinet.slice';
@@ -36,7 +33,7 @@ function App() {
       const generatedPassword = await passGeneratorService.generatePassword(
         masterPassword,
         switcherKey,
-        length
+        length,
       );
       setGeneratedPassword(generatedPassword);
     };
@@ -49,7 +46,7 @@ function App() {
         key: switcherKey,
         name: switcherName,
         length,
-      })
+      }),
     );
   };
 
@@ -60,17 +57,11 @@ function App() {
   const copyPassword = (generatedPassword: string) =>
     navigator.clipboard.writeText(generatedPassword);
 
-  const handleCopySwitcherPassword = async (
-    masterPassword: string,
-    key: string,
-    length: number
-  ) => {
-    const generatedPassword = await passGeneratorService.generatePassword(
-      masterPassword,
-      key,
-      length
-    );
-    copyPassword(generatedPassword);
+  const handleCopySwitcherPassword = (key: string, length: number) => {
+    passGeneratorService
+      .generatePassword(masterPassword, key, length)
+      .then(copyPassword)
+      .catch(console.error);
   };
 
   return (
@@ -125,7 +116,7 @@ function App() {
         <Chip label="Generated Password" size="small" />
       </Divider>
       <Box display={'flex'} alignItems={'center'} gap={1}>
-        <IconButton onClick={() => copyPassword.bind(generatedPassword)}>
+        <IconButton onClick={() => copyPassword(generatedPassword)}>
           <ContentCopy />
         </IconButton>
         <TextField
@@ -143,40 +134,13 @@ function App() {
       <Grid container spacing={1}>
         {Object.values(cabinet).map(({ key, length, name }) => (
           <Grid item key={key}>
-            <Card>
-              <CardContent>
-                <List>
-                  <ListItem sx={{ p: 1 }}>
-                    <Box display={'flex'} gap={1} alignItems={'center'}>
-                      <Typography variant="h5">{name}</Typography>
-                      <IconButton onClick={() => handleDeleteSwitcher(key)}>
-                        <Delete />
-                      </IconButton>
-                    </Box>
-                  </ListItem>
-                  <ListItem sx={{ p: 1 }}>
-                    <Typography>&bull; Key : {key}</Typography>
-                  </ListItem>
-                  <ListItem sx={{ p: 1 }}>
-                    <Typography>&bull; Length : {length}</Typography>
-                  </ListItem>
-                  <ListItem sx={{ p: 1 }}>
-                    <Button
-                      variant="contained"
-                      onClick={() =>
-                        handleCopySwitcherPassword(
-                          masterPassword,
-                          key,
-                          length
-                        ).catch(console.error)
-                      }
-                    >
-                      Copy Password
-                    </Button>
-                  </ListItem>
-                </List>
-              </CardContent>
-            </Card>
+            <Switcher
+              length={length}
+              name={name}
+              switchKey={key}
+              onCopyPassword={handleCopySwitcherPassword}
+              onDeleteSwitch={handleDeleteSwitcher}
+            />
           </Grid>
         ))}
       </Grid>
