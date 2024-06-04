@@ -13,8 +13,12 @@ import { useEffect, useState } from 'react';
 import { Switcher } from './components';
 import { useInjection } from './hooks';
 import { PassGeneratorService } from './services';
-import { addSwitcher, deleteSwitcher } from './state/cabinet.slice';
 import { useAppDispatch, useAppSelector } from './state/store';
+import {
+  addSwitcher,
+  deleteSwitcher,
+  selectAllSwitchers,
+} from './state/switchers.slice';
 
 function App() {
   const [masterPassword, setMasterPassword] = useState('');
@@ -25,7 +29,7 @@ function App() {
 
   const passGeneratorService = useInjection(PassGeneratorService);
 
-  const cabinet = useAppSelector(({ cabinet }) => cabinet);
+  const switchers = useAppSelector(selectAllSwitchers);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -45,6 +49,7 @@ function App() {
       addSwitcher({
         key: switcherKey,
         name: switcherName,
+        groupName: 'group',
         length,
       }),
     );
@@ -133,7 +138,7 @@ function App() {
         <Chip label="Saved Switchers" size="small" />
       </Divider>
       <Grid container spacing={1}>
-        {Object.values(cabinet).map(({ key, length, name }) => (
+        {Object.values(switchers).map(({ key, length, name }) => (
           <Grid item key={key}>
             <Switcher
               length={length}
