@@ -1,4 +1,4 @@
-import { Box, Button, List, ListItem, TextField } from '@mui/material';
+import { Box, Button, List, TextField } from '@mui/material';
 import { useState } from 'react';
 import { Group } from '../components';
 import { useAppDispatch, useAppSelector } from '../state';
@@ -31,15 +31,15 @@ export const GroupView = () => {
       </Box>
       <List>
         {groups.map((group) => (
-          <ListItem key={group.id}>
-            <Group
-              switchers={switchers.filter(
-                ({ groupName }) => group.name === groupName,
-              )}
-              onDeleteSwitch={() => undefined}
-              {...group}
-            />
-          </ListItem>
+          <Group
+            key={group.id}
+            switchers={switchers.filter(
+              ({ groupName }) => group.name === groupName,
+            )}
+            onDeleteSwitch={() => undefined}
+            onDeleteGroup={() => undefined}
+            {...group}
+          />
         ))}
       </List>
     </Box>
