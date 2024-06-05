@@ -46,11 +46,13 @@ export const Group = ({
       </ListItemButton>
       <Collapse in={open}>
         <Grid container spacing={1}>
-          {switchers.map((switcher) => (
-            <Grid item key={switcher.key}>
+          {switchers.map(({ key, length, name }) => (
+            <Grid item key={key}>
               <SwitcherComponent
                 onDeleteSwitch={onDeleteSwitch}
-                {...switcher}
+                switcherKey={key}
+                name={name}
+                length={length}
               />
             </Grid>
           ))}
