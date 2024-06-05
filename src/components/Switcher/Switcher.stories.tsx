@@ -13,7 +13,7 @@ export const Default: Story = {
   args: {
     length: 15,
     name: 'Switcher Name',
-    switchKey: 'switcher-key',
+    key: 'switcher-key',
     masterPassword: 'masterPassword',
   },
 };

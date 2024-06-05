@@ -20,7 +20,7 @@ import { PassGeneratorService } from '../../services';
 
 export type SwitcherProps = {
   name: string;
-  switchKey: string;
+  key: string;
   length: number;
   masterPassword?: string;
   onDeleteSwitch: (switchKey: string) => void;
@@ -29,7 +29,7 @@ export type SwitcherProps = {
 export const Switcher = ({
   length,
   name,
-  switchKey,
+  key,
   masterPassword = '',
   onDeleteSwitch,
 }: SwitcherProps) => {
@@ -50,7 +50,7 @@ export const Switcher = ({
     const fn = async () => {
       const generatedPassword = await passGeneratorService.generatePassword(
         masterPassword,
-        switchKey,
+        key,
         length,
       );
 
@@ -58,7 +58,7 @@ export const Switcher = ({
     };
 
     fn();
-  }, [length, masterPassword, passGeneratorService, switchKey]);
+  }, [length, masterPassword, passGeneratorService, key]);
 
   const handleCopyPassword = () => {
     navigator.clipboard.writeText(generatedPassword).catch(console.error);
@@ -70,13 +70,13 @@ export const Switcher = ({
           <ListItem sx={{ p: 1 }}>
             <Box display={'flex'} gap={1} alignItems={'center'}>
               <Typography variant="h5">{name}</Typography>
-              <IconButton onClick={() => onDeleteSwitch(switchKey)}>
+              <IconButton onClick={() => onDeleteSwitch(key)}>
                 <Delete />
               </IconButton>
             </Box>
           </ListItem>
           <ListItem sx={{ p: 1 }}>
-            <Typography>&bull; Key : {switchKey}</Typography>
+            <Typography>&bull; Key : {key}</Typography>
           </ListItem>
           <ListItem sx={{ p: 1 }}>
             <Typography>&bull; Length : {length}</Typography>

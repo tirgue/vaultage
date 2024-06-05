@@ -20,8 +20,12 @@ export const groupSlice = createSlice({
       state.allIds = state.allIds.filter((id) => id !== groupName);
     },
   },
+  selectors: {
+    selectAllGroups: (state) => state.allIds.map((id) => state.byId[id]),
+  },
 });
 
 export const { addGroup, deleteGroup } = groupSlice.actions;
+export const { selectAllGroups } = groupSlice.selectors;
 
 export default groupSlice.reducer;

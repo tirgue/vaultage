@@ -4,32 +4,31 @@ import {
   Button,
   Chip,
   Divider,
-  Grid,
   IconButton,
+  MenuItem,
+  Select,
   TextField,
   Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { Switcher } from './components';
 import { useInjection } from './hooks';
 import { PassGeneratorService } from './services';
+import { selectAllGroups } from './state/groups.slice';
 import { useAppDispatch, useAppSelector } from './state/store';
-import {
-  addSwitcher,
-  deleteSwitcher,
-  selectAllSwitchers,
-} from './state/switchers.slice';
+import { addSwitcher } from './state/switchers.slice';
+import { GroupView } from './views/Group.view';
 
 function App() {
   const [masterPassword, setMasterPassword] = useState('');
   const [switcherName, setSwitcherName] = useState('');
+  const [group, setGroup] = useState('');
   const [switcherKey, setSwitcherKey] = useState('');
   const [length, setLength] = useState(15);
   const [generatedPassword, setGeneratedPassword] = useState('');
 
   const passGeneratorService = useInjection(PassGeneratorService);
 
-  const switchers = useAppSelector(selectAllSwitchers);
+  const groups = useAppSelector(selectAllGroups);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -49,14 +48,10 @@ function App() {
       addSwitcher({
         key: switcherKey,
         name: switcherName,
-        groupName: 'group',
+        groupName: group,
         length,
       }),
     );
-  };
-
-  const handleDeleteSwitcher = (switcherKey: string) => {
-    dispatch(deleteSwitcher(switcherKey));
   };
 
   const handleRandomSwitcherKey = () => {
@@ -112,6 +107,21 @@ function App() {
           type="number"
           onChange={(e) => setLength(Math.max(parseInt(e.target.value, 10), 0))}
         />
+        <Select
+          value={group}
+          onChange={(e) => setGroup(e.target.value)}
+          size="small"
+          displayEmpty
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {groups.map(({ id, name }) => (
+            <MenuItem key={id} value={id}>
+              {name}
+            </MenuItem>
+          ))}
+        </Select>
         <Button variant="contained" onClick={handleAddSwitcher}>
           Add Switcher
         </Button>
@@ -135,21 +145,9 @@ function App() {
         />
       </Box>
       <Divider textAlign="left">
-        <Chip label="Saved Switchers" size="small" />
+        <Chip label="Groups" size="small" />
       </Divider>
-      <Grid container spacing={1}>
-        {Object.values(switchers).map(({ key, length, name }) => (
-          <Grid item key={key}>
-            <Switcher
-              length={length}
-              name={name}
-              switchKey={key}
-              masterPassword={masterPassword}
-              onDeleteSwitch={handleDeleteSwitcher}
-            />
-          </Grid>
-        ))}
-      </Grid>
+      <GroupView />
     </Box>
   );
 }
