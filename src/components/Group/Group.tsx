@@ -13,9 +13,11 @@ import { useState } from 'react';
 import { Switcher } from '../../types';
 import { PasswordViewer } from '../PasswordViewer';
 
+export type SwitchersProp = Array<Switcher & { generatedPassword: string }>;
+
 export type GroupProps = {
   name: string;
-  switchers: Omit<Switcher, 'groupName'>[];
+  switchers: SwitchersProp;
   onDeleteSwitch: (switchKey: string) => void;
   onDeleteGroup: (groupName: string) => void;
   filter?: string;
@@ -49,7 +51,7 @@ export const Group = ({
       </ListItemButton>
       <Collapse in={open}>
         <List>
-          {switchers.map(({ key, length, name }) => (
+          {switchers.map(({ key, length, name, generatedPassword }) => (
             <ListItem key={key} component={Box} gap={3}>
               <ListItemText
                 primary={
@@ -68,7 +70,7 @@ export const Group = ({
                 }
                 sx={{ minWidth: 'initial' }}
               />
-              <PasswordViewer generatedPassword={key} />
+              <PasswordViewer generatedPassword={generatedPassword} />
             </ListItem>
           ))}
         </List>

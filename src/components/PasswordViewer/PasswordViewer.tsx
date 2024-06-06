@@ -38,11 +38,11 @@ export const PasswordViewer = ({ generatedPassword }: PesswordViewerProps) => {
         value={generatedPasswordVisual}
         onClick={handleCopyPassword}
       />
-      <IconButton onClick={handleCopyPassword}>
-        <ContentCopy />
-      </IconButton>
       <IconButton onClick={() => setVisible((v) => !v)}>
         {visible ? <VisibilityOff /> : <Visibility />}
+      </IconButton>
+      <IconButton onClick={handleCopyPassword}>
+        <ContentCopy />
       </IconButton>
     </Box>
   );
