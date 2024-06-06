@@ -1,5 +1,6 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
 import { Group, SliceState } from '../types';
+import { selectAllIds, selectById } from './common-selector';
 import { getInitialState } from './get-initial-state';
 
 const initialState: SliceState<Group> = getInitialState('group');
@@ -21,7 +22,9 @@ export const groupSlice = createSlice({
     },
   },
   selectors: {
-    selectAllGroups: (state) => state.allIds.map((id) => state.byId[id]),
+    selectAllGroups: createSelector(selectById, selectAllIds, (byId, allIds) =>
+      allIds.map((id) => byId[id]),
+    ),
   },
 });
 

@@ -1,5 +1,6 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { SliceState, Switcher } from '../types';
+import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
+import { SliceObject, SliceState, Switcher } from '../types';
+import { selectAllIds, selectById } from './common-selector';
 import { getInitialState } from './get-initial-state';
 import { deleteGroup } from './groups.slice';
 
@@ -45,11 +46,19 @@ export const switcherSlice = createSlice({
     });
   },
   selectors: {
-    selectAllSwitchers: (state) => state.allIds.map((id) => state.byId[id]),
-    selectSwitcherByGroup: (state, groupName: string) =>
-      Object.values(state.byId).filter(
-        (switcher) => switcher.groupName === groupName,
-      ),
+    selectAllSwitchers: createSelector(
+      selectById,
+      selectAllIds,
+      (byId, allIds) => allIds.map((id) => byId[id]),
+    ),
+    selectSwitcherByGroup: createSelector(
+      selectById,
+      (_, groupName: string) => groupName,
+      (byId: Record<string, SliceObject<Switcher>>, groupName) =>
+        Object.values(byId).filter(
+          (switcher) => switcher.groupName === groupName,
+        ),
+    ),
   },
 });
 
