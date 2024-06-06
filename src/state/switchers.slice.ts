@@ -11,6 +11,8 @@ export const switcherSlice = createSlice({
   initialState,
   reducers: {
     addSwitcher: (state, { payload: switcher }: PayloadAction<Switcher>) => {
+      if (state.byId[switcher.key]) return;
+
       state.byId[switcher.key] = {
         ...switcher,
         id: switcher.key,

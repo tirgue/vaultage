@@ -10,6 +10,8 @@ export const groupSlice = createSlice({
   initialState,
   reducers: {
     addGroup: (state, { payload: groupName }: PayloadAction<string>) => {
+      if (state.byId[groupName]) return;
+
       state.byId[groupName] = {
         id: groupName,
         name: groupName,

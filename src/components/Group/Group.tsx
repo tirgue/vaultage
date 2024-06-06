@@ -18,7 +18,7 @@ export type SwitchersProp = Array<Switcher & { generatedPassword: string }>;
 export type GroupProps = {
   name: string;
   switchers: SwitchersProp;
-  onDeleteSwitch: (switchKey: string) => void;
+  onDeleteSwitcher: (switchKey: string) => void;
   onDeleteGroup: (groupName: string) => void;
   filter?: string;
 };
@@ -26,14 +26,17 @@ export type GroupProps = {
 export const Group = ({
   name,
   switchers,
-  onDeleteSwitch,
+  onDeleteSwitcher,
   onDeleteGroup,
 }: GroupProps) => {
   const [open, setOpen] = useState(false);
 
-  const handleDeleteGroup: React.MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.stopPropagation();
+  const handleDeleteGroup = (name: string) => {
     onDeleteGroup(name);
+  };
+
+  const handleDeleteSwitcher = (id: string) => {
+    onDeleteSwitcher(id);
   };
 
   return (
@@ -44,15 +47,23 @@ export const Group = ({
         disableRipple
       >
         <ListItemText primary={name} />
-        <IconButton onClick={handleDeleteGroup}>
+        <IconButton onClick={() => handleDeleteGroup(name)}>
           <Delete />
         </IconButton>
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={open}>
         <List>
+          {switchers.length === 0 ? (
+            <ListItem component={Box} gap={3}>
+              <Typography variant="overline">Empty</Typography>
+            </ListItem>
+          ) : null}
           {switchers.map(({ key, length, name, generatedPassword }) => (
             <ListItem key={key} component={Box} gap={3}>
+              <IconButton onClick={() => handleDeleteSwitcher(key)}>
+                <Delete />
+              </IconButton>
               <ListItemText
                 primary={
                   <Typography whiteSpace="nowrap" width="fit-content">

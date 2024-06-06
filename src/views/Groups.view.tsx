@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import { Group, SwitchersProp } from '../components';
 import { useInjection } from '../hooks';
 import { PassGeneratorService } from '../services';
-import { useAppSelector } from '../state';
-import { selectAllGroups } from '../state/groups.slice';
+import { useAppDispatch, useAppSelector } from '../state';
+import { deleteGroup, selectAllGroups } from '../state/groups.slice';
 import { selectMasterPassword } from '../state/master-password.slice';
-import { selectAllSwitchers } from '../state/switchers.slice';
+import { deleteSwitcher, selectAllSwitchers } from '../state/switchers.slice';
 
 export const GroupsView = () => {
   const [switchersProp, setSwitchersProp] = useState<SwitchersProp>([]);
@@ -14,6 +14,8 @@ export const GroupsView = () => {
   const masterPassword = useAppSelector(selectMasterPassword);
   const groups = useAppSelector(selectAllGroups);
   const switchers = useAppSelector(selectAllSwitchers);
+
+  const dispatch = useAppDispatch();
 
   const passGeneratorService = useInjection(PassGeneratorService);
 
@@ -38,6 +40,14 @@ export const GroupsView = () => {
     fn();
   }, [masterPassword, passGeneratorService, switchers]);
 
+  const handleDeleteSwitcher = (name: string) => {
+    dispatch(deleteSwitcher(name));
+  };
+
+  const handleDeleteGroup = (name: string) => {
+    dispatch(deleteGroup(name));
+  };
+
   return (
     <Box gap={1}>
       <Box display={'flex'} alignItems={'center'} gap={1}></Box>
@@ -48,8 +58,8 @@ export const GroupsView = () => {
             switchers={switchersProp.filter(
               ({ groupName }) => group.name === groupName,
             )}
-            onDeleteSwitch={() => undefined}
-            onDeleteGroup={() => undefined}
+            onDeleteSwitcher={handleDeleteSwitcher}
+            onDeleteGroup={handleDeleteGroup}
             {...group}
           />
         ))}
