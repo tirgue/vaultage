@@ -26,6 +26,7 @@ export const MasterPasswordView = () => {
         label="Master Password"
         type={visible ? 'text' : 'password'}
         value={masterPassword}
+        InputProps={{ style: { fontFamily: 'Ubuntu Sans Mono' } }}
         onChange={handleOnMasterPasswordChange}
         fullWidth
       ></TextField>

@@ -33,8 +33,10 @@ export const PasswordViewer = ({ generatedPassword }: PesswordViewerProps) => {
         margin="dense"
         sx={{ input: { cursor: 'pointer' } }}
         fullWidth
-        InputProps={{ readOnly: true }}
-        InputLabelProps={{ style: { fontFamily: 'monospace' } }}
+        InputProps={{
+          readOnly: true,
+          style: { fontFamily: 'Ubuntu Sans Mono' },
+        }}
         value={generatedPasswordVisual}
         onClick={handleCopyPassword}
       />

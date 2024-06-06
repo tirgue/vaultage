@@ -1,0 +1,42 @@
+@font-face {
+  font-family: 'Ubuntu Sans Mono';
+  font-weight: bolder;
+  src: local('UbuntuSansMono-Bold.ttf'),
+    url(./assets/fonts/UbuntuSansMono-Bold.ttf), format('ttf');
+}
+
+@font-face {
+  font-family: 'Ubuntu Sans Mono';
+  font-weight: bolder;
+  font-style: italic;
+  src: local('UbuntuSansMono-BoldItalic'),
+    url(./assets/fonts/UbuntuSansMono-BoldItalic.ttf), format('ttf');
+}
+
+@font-face {
+  font-family: 'Ubuntu Sans Mono';
+  font-style: italic;
+  src: local('UbuntuSansMono-Italic'),
+    url(./assets/fonts/UbuntuSansMono-Italic.ttf), format('ttf');
+}
+
+@font-face {
+  font-family: 'Ubuntu Sans Mono';
+  src: local('UbuntuSansMono-Regular'),
+    url(./assets/fonts/UbuntuSansMono-Regular.ttf), format('ttf');
+}
+
+@font-face {
+  font-family: 'Ubuntu Sans Mono';
+  font-weight: bold;
+  src: local('UbuntuSansMono-SemiBold'),
+    url(./assets/fonts/UbuntuSansMono-SemiBold.ttf), format('ttf');
+}
+
+@font-face {
+  font-family: 'Ubuntu Sans Mono';
+  font-weight: bold;
+  font-style: italic;
+  src: local('UbuntuSansMono-SemiBold'),
+    url(./assets/fonts/UbuntuSansMono-SemiBold.ttf), format('ttf');
+}

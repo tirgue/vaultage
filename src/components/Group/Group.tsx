@@ -73,6 +73,10 @@ export const Group = ({
                       variant="body2"
                       whiteSpace="nowrap"
                       width="fit-content"
+                      sx={{
+                        fontStyle: 'italic',
+                        fontFamily: 'Ubuntu Sans Mono',
+                      }}
                     >
                       {key} - {length}
                     </Typography>
