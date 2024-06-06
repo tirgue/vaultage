@@ -55,7 +55,7 @@ export const SwitcherCreationView = ({
 
   return (
     <Dialog open={visible} onClose={onHide}>
-      <DialogTitle>Create Switcher</DialogTitle>
+      <DialogTitle>Add Switcher</DialogTitle>
       <DialogContent>
         <Box display={'flex'} flexDirection={'column'} gap={2} pt={1}>
           <TextField

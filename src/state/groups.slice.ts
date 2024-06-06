@@ -22,8 +22,10 @@ export const groupSlice = createSlice({
     },
   },
   selectors: {
-    selectAllGroups: createSelector(selectById, selectAllIds, (byId, allIds) =>
-      allIds.map((id) => byId[id]),
+    selectAllGroups: createSelector(
+      selectById<Group>,
+      selectAllIds<Group>,
+      (byId, allIds) => allIds.map((id) => byId[id]),
     ),
   },
 });

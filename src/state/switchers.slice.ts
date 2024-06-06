@@ -47,12 +47,12 @@ export const switcherSlice = createSlice({
   },
   selectors: {
     selectAllSwitchers: createSelector(
-      selectById,
-      selectAllIds,
+      selectById<Switcher>,
+      selectAllIds<Switcher>,
       (byId, allIds) => allIds.map((id) => byId[id]),
     ),
     selectSwitcherByGroup: createSelector(
-      selectById,
+      selectById<Switcher>,
       (_, groupName: string) => groupName,
       (byId: Record<string, SliceObject<Switcher>>, groupName) =>
         Object.values(byId).filter(

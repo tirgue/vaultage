@@ -9,10 +9,9 @@ const saveToStorageMiddleware = createListenerMiddleware();
 saveToStorageMiddleware.startListening.withTypes<RootState, AppDispatch>()({
   predicate: () => true,
   effect: (_, listenerApi) => {
-    const state: Partial<ReturnType<typeof listenerApi.getState>> =
-      listenerApi.getState();
-    delete state.masterPassword;
-    localStorage.setItem('root', JSON.stringify(state));
+    const state = listenerApi.getState();
+    const cleanState = { ...state, masterPassword: undefined };
+    localStorage.setItem('root', JSON.stringify(cleanState));
   },
 });
 
