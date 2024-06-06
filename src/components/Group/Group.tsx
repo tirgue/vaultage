@@ -60,27 +60,29 @@ export const Group = ({
             </ListItem>
           ) : null}
           {switchers.map(({ key, length, name, generatedPassword }) => (
-            <ListItem key={key} component={Box} gap={3}>
-              <IconButton onClick={() => handleDeleteSwitcher(key)}>
-                <Delete />
-              </IconButton>
-              <ListItemText
-                primary={
-                  <Typography whiteSpace="nowrap" width="fit-content">
-                    {name}
-                  </Typography>
-                }
-                secondary={
-                  <Typography
-                    variant="body2"
-                    whiteSpace="nowrap"
-                    width="fit-content"
-                  >
-                    {key} - {length}
-                  </Typography>
-                }
-                sx={{ minWidth: 'initial' }}
-              />
+            <ListItem key={key} component={Box} flexDirection={'column'}>
+              <Box display={'flex'} justifyContent={'left'} width="100%">
+                <ListItemText
+                  primary={
+                    <Typography whiteSpace="nowrap" width="fit-content">
+                      {name}
+                    </Typography>
+                  }
+                  secondary={
+                    <Typography
+                      variant="body2"
+                      whiteSpace="nowrap"
+                      width="fit-content"
+                    >
+                      {key} - {length}
+                    </Typography>
+                  }
+                  sx={{ minWidth: 'initial' }}
+                />
+                <IconButton onClick={() => handleDeleteSwitcher(key)}>
+                  <Delete />
+                </IconButton>
+              </Box>
               <PasswordViewer generatedPassword={generatedPassword} />
             </ListItem>
           ))}

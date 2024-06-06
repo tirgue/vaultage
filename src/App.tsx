@@ -5,8 +5,15 @@ import { MenuView } from './views/Menu.view';
 
 function App() {
   return (
-    <Box m={3} display={'flex'} flexDirection={'column'} gap={3}>
-      <Typography variant="h4" sx={{ mb: 5 }}>
+    <Box
+      display={'flex'}
+      flexDirection={'column'}
+      m="auto"
+      p={3}
+      gap={2}
+      maxWidth="700px"
+    >
+      <Typography variant="h4" sx={{ mb: 4 }}>
         Vaultage Demo
       </Typography>
       <MenuView />
