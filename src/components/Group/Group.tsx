@@ -1,14 +1,17 @@
 import { Delete, ExpandLess, ExpandMore } from '@mui/icons-material';
 import {
+  Box,
   Collapse,
-  Grid,
   IconButton,
+  List,
+  ListItem,
   ListItemButton,
   ListItemText,
+  Typography,
 } from '@mui/material';
 import { useState } from 'react';
 import { Switcher } from '../../types';
-import { Switcher as SwitcherComponent } from '../Switcher';
+import { PasswordViewer } from '../PasswordViewer';
 
 export type GroupProps = {
   name: string;
@@ -45,18 +48,30 @@ export const Group = ({
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={open}>
-        <Grid container spacing={1}>
+        <List>
           {switchers.map(({ key, length, name }) => (
-            <Grid item key={key}>
-              <SwitcherComponent
-                onDeleteSwitch={onDeleteSwitch}
-                switcherKey={key}
-                name={name}
-                length={length}
+            <ListItem key={key} component={Box} gap={3}>
+              <ListItemText
+                primary={
+                  <Typography whiteSpace="nowrap" width="fit-content">
+                    {name}
+                  </Typography>
+                }
+                secondary={
+                  <Typography
+                    variant="body2"
+                    whiteSpace="nowrap"
+                    width="fit-content"
+                  >
+                    {key} - {length}
+                  </Typography>
+                }
+                sx={{ minWidth: 'initial' }}
               />
-            </Grid>
+              <PasswordViewer generatedPassword={key} />
+            </ListItem>
           ))}
-        </Grid>
+        </List>
       </Collapse>
     </>
   );

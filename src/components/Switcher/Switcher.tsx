@@ -33,7 +33,6 @@ export const Switcher = ({
   masterPassword = '',
   onDeleteSwitch,
 }: SwitcherProps) => {
-  console.log('🚀 ~ key:', switcherKey);
   const [generatedPassword, setGeneratedPassword] = useState('');
   const [visible, setVisible] = useState(false);
 
