@@ -12,8 +12,20 @@ export const Default: Story = {
   args: {
     name: 'Group Name',
     switchers: [
-      { key: 'k1', length: 10, name: 'Name 1' },
-      { key: 'k2', length: 20, name: 'Name 2' },
+      {
+        key: 'k1',
+        length: 10,
+        name: 'Name 1',
+        groupName: '',
+        generatedPassword: '',
+      },
+      {
+        key: 'k2',
+        length: 20,
+        name: 'Name 2',
+        groupName: '',
+        generatedPassword: '',
+      },
     ],
   },
 };
