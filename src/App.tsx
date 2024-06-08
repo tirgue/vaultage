@@ -1,6 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import './fonts.css';
 import { GroupsView } from './views/Groups.view';
+import { ImportView } from './views/Import.view';
 import { MasterPasswordView } from './views/MasterPassword.view';
 import { MenuView } from './views/Menu.view';
 
@@ -20,6 +21,7 @@ function App() {
       <MenuView />
       <MasterPasswordView />
       <GroupsView />
+      <ImportView />
     </Box>
   );
 }

@@ -56,12 +56,14 @@ export const Group = ({
         <List>
           {switchers.length === 0 ? (
             <ListItem component={Box} gap={3}>
-              <Typography variant="overline">Empty</Typography>
+              <Typography variant="overline" fontStyle="italic">
+                Empty
+              </Typography>
             </ListItem>
           ) : null}
           {switchers.map(({ key, length, name, generatedPassword }) => (
             <ListItem key={key} component={Box} flexDirection={'column'}>
-              <Box display={'flex'} justifyContent={'left'} width="100%">
+              <Box display={'flex'} alignItems={'center'} width="100%">
                 <ListItemText
                   primary={
                     <Typography whiteSpace="nowrap" width="fit-content">
@@ -83,9 +85,11 @@ export const Group = ({
                   }
                   sx={{ minWidth: 'initial' }}
                 />
-                <IconButton onClick={() => handleDeleteSwitcher(key)}>
-                  <Delete />
-                </IconButton>
+                <Box>
+                  <IconButton onClick={() => handleDeleteSwitcher(key)}>
+                    <Delete />
+                  </IconButton>
+                </Box>
               </Box>
               <PasswordViewer generatedPassword={generatedPassword} />
             </ListItem>

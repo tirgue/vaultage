@@ -9,6 +9,8 @@ export const groupSlice = createSlice({
   name: 'group',
   initialState,
   reducers: {
+    setGroupState: (_, { payload }: PayloadAction<SliceState<Group>>) =>
+      payload,
     addGroup: (state, { payload: groupName }: PayloadAction<string>) => {
       if (state.byId[groupName]) return;
 
@@ -32,7 +34,7 @@ export const groupSlice = createSlice({
   },
 });
 
-export const { addGroup, deleteGroup } = groupSlice.actions;
+export const { addGroup, deleteGroup, setGroupState } = groupSlice.actions;
 export const { selectAllGroups } = groupSlice.selectors;
 
 export default groupSlice.reducer;

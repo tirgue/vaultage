@@ -10,6 +10,8 @@ export const switcherSlice = createSlice({
   name: 'switcher',
   initialState,
   reducers: {
+    setSwitcherState: (_, { payload }: PayloadAction<SliceState<Switcher>>) =>
+      payload,
     addSwitcher: (state, { payload: switcher }: PayloadAction<Switcher>) => {
       if (state.byId[switcher.key]) return;
 
@@ -64,7 +66,8 @@ export const switcherSlice = createSlice({
   },
 });
 
-export const { addSwitcher, deleteSwitcher } = switcherSlice.actions;
+export const { addSwitcher, deleteSwitcher, setSwitcherState } =
+  switcherSlice.actions;
 export const { selectAllSwitchers, selectSwitcherByGroup } =
   switcherSlice.selectors;
 

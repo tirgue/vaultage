@@ -106,7 +106,9 @@ export const SwitcherCreationView = ({
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onHide}>Cancel</Button>
+        <Button onClick={onHide} color="error">
+          Cancel
+        </Button>
         <Button onClick={handleAddSwitcher}>Add</Button>
       </DialogActions>
     </Dialog>

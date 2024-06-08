@@ -47,7 +47,9 @@ export const GroupCreationView = ({
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onHide}>Cancel</Button>
+        <Button onClick={onHide} color="error">
+          Cancel
+        </Button>
         <Button onClick={handleAddGroup}>Add</Button>
       </DialogActions>
     </Dialog>
