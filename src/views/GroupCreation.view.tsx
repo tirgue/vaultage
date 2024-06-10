@@ -8,6 +8,7 @@ import {
   TextField,
 } from '@mui/material';
 import { useState } from 'react';
+import { useAlertMessage } from '../hooks';
 import { useAppDispatch } from '../state';
 import { addGroup } from '../state/groups.slice';
 
@@ -24,11 +25,13 @@ export const GroupCreationView = ({
 
   const dispatch = useAppDispatch();
 
+  const { triggerAlert } = useAlertMessage();
+
   const handleAddGroup = () => {
     if (groupName === '') return;
 
     dispatch(addGroup(groupName));
-
+    triggerAlert('Group has been created');
     onHide();
   };
 

@@ -4,9 +4,13 @@ import { useMemo, useState } from 'react';
 
 export type PesswordViewerProps = {
   generatedPassword: string;
+  onCopy?: () => void;
 };
 
-export const PasswordViewer = ({ generatedPassword }: PesswordViewerProps) => {
+export const PasswordViewer = ({
+  generatedPassword,
+  onCopy,
+}: PesswordViewerProps) => {
   const [visible, setVisible] = useState(false);
 
   const generatedPasswordVisual = useMemo(
@@ -19,6 +23,7 @@ export const PasswordViewer = ({ generatedPassword }: PesswordViewerProps) => {
 
   const handleCopyPassword = () => {
     navigator.clipboard.writeText(generatedPassword).catch(console.error);
+    onCopy?.();
   };
   return (
     <Box

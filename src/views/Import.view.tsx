@@ -7,13 +7,15 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
-import { useInjection } from '../hooks';
+import { useAlertMessage, useInjection } from '../hooks';
 import { SharingService } from '../services';
 
 export const ImportView = () => {
   const [visible, setVisible] = useState(!!window.location.hash);
 
   const sharingService = useInjection(SharingService);
+
+  const { triggerAlert } = useAlertMessage();
 
   const handleHide = () => {
     window.location.hash = '';
@@ -22,6 +24,7 @@ export const ImportView = () => {
 
   const handleImport = () => {
     sharingService.import();
+    triggerAlert('Configuration has been imported successfully');
     handleHide();
   };
 

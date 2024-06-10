@@ -1,7 +1,7 @@
 import { Box, List, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Group, SwitchersProp } from '../components';
-import { useInjection } from '../hooks';
+import { useAlertMessage, useInjection } from '../hooks';
 import { PassGeneratorService } from '../services';
 import { useAppDispatch, useAppSelector } from '../state';
 import { deleteGroup, selectAllGroups } from '../state/groups.slice';
@@ -19,6 +19,8 @@ export const GroupsView = () => {
   const dispatch = useAppDispatch();
 
   const passGeneratorService = useInjection(PassGeneratorService);
+
+  const { triggerAlert } = useAlertMessage();
 
   useEffect(() => {
     const fn = async () => {
@@ -43,10 +45,16 @@ export const GroupsView = () => {
 
   const handleDeleteSwitcher = (name: string) => {
     dispatch(deleteSwitcher(name));
+    triggerAlert('Switcher has been deleted');
   };
 
   const handleDeleteGroup = (name: string) => {
     dispatch(deleteGroup(name));
+    triggerAlert('Group has been deleted');
+  };
+
+  const handleCopy = () => {
+    triggerAlert(`Password has been copied to your clipboard`);
   };
 
   return (
@@ -68,6 +76,7 @@ export const GroupsView = () => {
             onDeleteSwitcher={handleDeleteSwitcher}
             onDeleteGroup={handleDeleteGroup}
             filter={search}
+            onCopy={handleCopy}
             {...group}
           />
         ))}

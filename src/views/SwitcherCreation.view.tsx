@@ -12,6 +12,7 @@ import {
   TextField,
 } from '@mui/material';
 import { useState } from 'react';
+import { useAlertMessage } from '../hooks';
 import { useAppDispatch, useAppSelector } from '../state';
 import { selectAllGroups } from '../state/groups.slice';
 import { addSwitcher } from '../state/switchers.slice';
@@ -32,6 +33,8 @@ export const SwitcherCreationView = ({
 
   const groups = useAppSelector(selectAllGroups);
 
+  const { triggerAlert } = useAlertMessage();
+
   const handleRandomSwitcherKey = () => {
     setSwitcherKey(Math.random().toString(36).slice(2));
   };
@@ -49,6 +52,7 @@ export const SwitcherCreationView = ({
         length: switcherLength,
       }),
     );
+    triggerAlert('Switcher has been created');
 
     onHide();
   };

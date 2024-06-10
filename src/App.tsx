@@ -1,8 +1,14 @@
 import { Download } from '@mui/icons-material';
-import { Box, IconButton, Typography, styled } from '@mui/material';
+import { Box, Button, IconButton, Typography, styled } from '@mui/material';
 import image from './assets/images/lock-alt.svg';
 import './fonts.css';
-import { useInstallPrompt } from './hooks';
+import {
+  AlertContext,
+  useAlertMessage,
+  useInitAlertMessage,
+  useInstallPrompt,
+} from './hooks';
+import { AlertMessageView } from './views/AlertMessage.view';
 import { GroupsView } from './views/Groups.view';
 import { ImportView } from './views/Import.view';
 import { MasterPasswordView } from './views/MasterPassword.view';
@@ -17,30 +23,34 @@ const Image = styled('img')({
 
 function App() {
   const [canInstall, triggerInstall] = useInstallPrompt();
+  const alertContextValue = useInitAlertMessage();
 
   return (
-    <Box
-      display={'flex'}
-      flexDirection={'column'}
-      m="auto"
-      p={3}
-      gap={2}
-      maxWidth="700px"
-    >
-      <Box display={'flex'} alignItems={'center'} gap={3}>
-        <Image src={image} />
-        <Typography variant="h4">Vaultage Demo</Typography>
-        {canInstall ? (
-          <IconButton onClick={triggerInstall}>
-            <Download />
-          </IconButton>
-        ) : null}
+    <AlertContext.Provider value={alertContextValue}>
+      <Box
+        display={'flex'}
+        flexDirection={'column'}
+        m="auto"
+        p={3}
+        gap={2}
+        maxWidth="700px"
+      >
+        <Box display={'flex'} alignItems={'center'} gap={3}>
+          <Image src={image} />
+          <Typography variant="h4">Vaultage Demo</Typography>
+          {canInstall ? (
+            <IconButton onClick={triggerInstall}>
+              <Download />
+            </IconButton>
+          ) : null}
+        </Box>
+        <MenuView />
+        <MasterPasswordView />
+        <GroupsView />
+        <ImportView />
+        <AlertMessageView />
       </Box>
-      <MenuView />
-      <MasterPasswordView />
-      <GroupsView />
-      <ImportView />
-    </Box>
+    </AlertContext.Provider>
   );
 }
 

@@ -21,6 +21,7 @@ export type GroupProps = {
   onDeleteSwitcher: (switchKey: string) => void;
   onDeleteGroup: (groupName: string) => void;
   filter?: string;
+  onCopy?: () => void;
 };
 
 export const Group = ({
@@ -29,6 +30,7 @@ export const Group = ({
   onDeleteSwitcher,
   onDeleteGroup,
   filter = '',
+  onCopy,
 }: GroupProps) => {
   const [open, setOpen] = useState(false);
 
@@ -113,7 +115,10 @@ export const Group = ({
                   </IconButton>
                 </Box>
               </Box>
-              <PasswordViewer generatedPassword={generatedPassword} />
+              <PasswordViewer
+                generatedPassword={generatedPassword}
+                onCopy={onCopy}
+              />
             </ListItem>
           ))}
         </List>

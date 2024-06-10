@@ -1,7 +1,7 @@
 import { Share } from '@mui/icons-material';
 import { Box, Button, IconButton } from '@mui/material';
 import { useState } from 'react';
-import { useInjection } from '../hooks';
+import { useAlertMessage, useInjection } from '../hooks';
 import { SharingService } from '../services';
 import { GroupCreationView } from './GroupCreation.view';
 import { SwitcherCreationView } from './SwitcherCreation.view';
@@ -12,9 +12,12 @@ export const MenuView = () => {
 
   const sharingService = useInjection(SharingService);
 
+  const { triggerAlert } = useAlertMessage();
+
   const handleExport = () => {
     const exportUrl = sharingService.getExportUrl();
     navigator.clipboard.writeText(exportUrl).catch(console.error);
+    triggerAlert('Export Link has been copied to your clipboard');
   };
 
   return (
