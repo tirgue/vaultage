@@ -1,6 +1,8 @@
-import { Box, Typography, styled } from '@mui/material';
+import { Download } from '@mui/icons-material';
+import { Box, IconButton, Typography, styled } from '@mui/material';
 import image from './assets/images/lock-alt.svg';
 import './fonts.css';
+import { useInstallPrompt } from './hooks';
 import { GroupsView } from './views/Groups.view';
 import { ImportView } from './views/Import.view';
 import { MasterPasswordView } from './views/MasterPassword.view';
@@ -14,6 +16,8 @@ const Image = styled('img')({
 });
 
 function App() {
+  const [canInstall, triggerInstall] = useInstallPrompt();
+
   return (
     <Box
       display={'flex'}
@@ -26,6 +30,11 @@ function App() {
       <Box display={'flex'} alignItems={'center'} gap={3}>
         <Image src={image} />
         <Typography variant="h4">Vaultage Demo</Typography>
+        {canInstall ? (
+          <IconButton onClick={triggerInstall}>
+            <Download />
+          </IconButton>
+        ) : null}
       </Box>
       <MenuView />
       <MasterPasswordView />
