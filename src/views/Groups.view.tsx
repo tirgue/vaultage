@@ -1,4 +1,4 @@
-import { Box, List } from '@mui/material';
+import { Box, List, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Group, SwitchersProp } from '../components';
 import { useInjection } from '../hooks';
@@ -10,6 +10,7 @@ import { deleteSwitcher, selectAllSwitchers } from '../state/switchers.slice';
 
 export const GroupsView = () => {
   const [switchersProp, setSwitchersProp] = useState<SwitchersProp>([]);
+  const [search, setSearch] = useState('');
 
   const masterPassword = useAppSelector(selectMasterPassword);
   const groups = useAppSelector(selectAllGroups);
@@ -38,7 +39,7 @@ export const GroupsView = () => {
       setSwitchersProp(newSwitchers);
     };
     fn();
-  }, [masterPassword, passGeneratorService, switchers]);
+  }, [masterPassword, passGeneratorService, search, switchers]);
 
   const handleDeleteSwitcher = (name: string) => {
     dispatch(deleteSwitcher(name));
@@ -50,7 +51,13 @@ export const GroupsView = () => {
 
   return (
     <Box gap={1}>
-      <Box display={'flex'} alignItems={'center'} gap={1}></Box>
+      <TextField
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        size="small"
+        label="Search"
+        fullWidth
+      ></TextField>
       <List>
         {groups.map((group) => (
           <Group
@@ -60,6 +67,7 @@ export const GroupsView = () => {
             )}
             onDeleteSwitcher={handleDeleteSwitcher}
             onDeleteGroup={handleDeleteGroup}
+            filter={search}
             {...group}
           />
         ))}

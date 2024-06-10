@@ -9,7 +9,7 @@ import {
   ListItemText,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Switcher } from '../../types';
 import { PasswordViewer } from '../PasswordViewer';
 
@@ -28,8 +28,17 @@ export const Group = ({
   switchers,
   onDeleteSwitcher,
   onDeleteGroup,
+  filter = '',
 }: GroupProps) => {
   const [open, setOpen] = useState(false);
+
+  const filteredSwitchers = useMemo(
+    () =>
+      switchers.filter(({ name }) =>
+        name.toUpperCase().includes(filter.toUpperCase()),
+      ),
+    [filter, switchers],
+  );
 
   const handleDeleteGroup = (name: string) => {
     onDeleteGroup(name);
@@ -46,7 +55,18 @@ export const Group = ({
         sx={{ gap: 1 }}
         disableRipple
       >
-        <ListItemText primary={name} />
+        <ListItemText
+          primary={
+            <Box display={'flex'} gap={1} alignItems={'center'}>
+              <Typography>{name}</Typography>
+              {filter ? (
+                <Typography fontStyle="italic" variant="body2">
+                  ({filteredSwitchers.length})
+                </Typography>
+              ) : null}
+            </Box>
+          }
+        />
         <IconButton onClick={() => handleDeleteGroup(name)}>
           <Delete />
         </IconButton>
@@ -54,14 +74,16 @@ export const Group = ({
       </ListItemButton>
       <Collapse in={open}>
         <List>
-          {switchers.length === 0 ? (
+          {filteredSwitchers.length === 0 ? (
             <ListItem component={Box} gap={3}>
               <Typography variant="overline" fontStyle="italic">
-                Empty
+                {switchers.length === 0
+                  ? 'Empty'
+                  : 'No switchers matching filter'}
               </Typography>
             </ListItem>
           ) : null}
-          {switchers.map(({ key, length, name, generatedPassword }) => (
+          {filteredSwitchers.map(({ key, length, name, generatedPassword }) => (
             <ListItem key={key} component={Box} flexDirection={'column'}>
               <Box display={'flex'} alignItems={'center'} width="100%">
                 <ListItemText
