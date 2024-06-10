@@ -1,9 +1,17 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, styled } from '@mui/material';
+import image from './assets/images/lock-alt.svg';
 import './fonts.css';
 import { GroupsView } from './views/Groups.view';
 import { ImportView } from './views/Import.view';
 import { MasterPasswordView } from './views/MasterPassword.view';
 import { MenuView } from './views/Menu.view';
+
+const Image = styled('img')({
+  height: '4em',
+  backgroundColor: '#ffffff50',
+  borderRadius: '25%',
+  padding: '0.2em',
+});
 
 function App() {
   return (
@@ -15,9 +23,10 @@ function App() {
       gap={2}
       maxWidth="700px"
     >
-      <Typography variant="h4" sx={{ mb: 4 }}>
-        Vaultage Demo
-      </Typography>
+      <Box display={'flex'} alignItems={'center'} gap={3}>
+        <Image src={image} />
+        <Typography variant="h4">Vaultage Demo</Typography>
+      </Box>
       <MenuView />
       <MasterPasswordView />
       <GroupsView />
