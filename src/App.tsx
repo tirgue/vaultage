@@ -1,13 +1,8 @@
 import { Download } from '@mui/icons-material';
-import { Box, Button, IconButton, Typography, styled } from '@mui/material';
+import { Box, IconButton, Typography, styled } from '@mui/material';
 import image from './assets/images/lock-alt.svg';
 import './fonts.css';
-import {
-  AlertContext,
-  useAlertMessage,
-  useInitAlertMessage,
-  useInstallPrompt,
-} from './hooks';
+import { AlertContext, useInitAlertMessage, useInstallPrompt } from './hooks';
 import { AlertMessageView } from './views/AlertMessage.view';
 import { GroupsView } from './views/Groups.view';
 import { ImportView } from './views/Import.view';
