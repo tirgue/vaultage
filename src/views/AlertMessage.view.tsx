@@ -9,6 +9,7 @@ const animation = keyframes([
 ]);
 
 const Item = styled(Paper)({
+  opacity: 0,
   animationName: animation,
   animationDuration: '4s',
 });

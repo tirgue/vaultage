@@ -1,4 +1,4 @@
-import { Box, List, TextField } from '@mui/material';
+import { List, TextField, styled } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Group, SwitchersProp } from '../components';
 import { useAlertMessage, useInjection } from '../hooks';
@@ -7,6 +7,16 @@ import { useAppDispatch, useAppSelector } from '../state';
 import { deleteGroup, selectAllGroups } from '../state/groups.slice';
 import { selectMasterPassword } from '../state/master-password.slice';
 import { deleteSwitcher, selectAllSwitchers } from '../state/switchers.slice';
+
+const NoScrollList = styled(List)({
+  padding: 0,
+  overflow: 'auto',
+  '-ms-overflow-style': 'none',
+  'scrollbar-width': 'none',
+  '::-webkit-scrollbar': {
+    display: 'none',
+  },
+});
 
 export const GroupsView = () => {
   const [switchersProp, setSwitchersProp] = useState<SwitchersProp>([]);
@@ -58,7 +68,7 @@ export const GroupsView = () => {
   };
 
   return (
-    <Box gap={1}>
+    <>
       <TextField
         value={search}
         onChange={(e) => setSearch(e.target.value)}
@@ -66,7 +76,7 @@ export const GroupsView = () => {
         label="Search"
         fullWidth
       ></TextField>
-      <List>
+      <NoScrollList sx={{ pb: 3 }}>
         {groups.map((group) => (
           <Group
             key={group.id}
@@ -80,7 +90,7 @@ export const GroupsView = () => {
             {...group}
           />
         ))}
-      </List>
-    </Box>
+      </NoScrollList>
+    </>
   );
 };

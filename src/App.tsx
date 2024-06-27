@@ -27,8 +27,10 @@ function App() {
         flexDirection={'column'}
         m="auto"
         p={3}
+        pb={0}
         gap={2}
         maxWidth="700px"
+        height="100vh"
       >
         <Box display={'flex'} alignItems={'center'} gap={3}>
           <Image src={image} />
