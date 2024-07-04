@@ -58,7 +58,7 @@ export const SwitcherCreationView = ({
           length: switcherLengthComputed,
         }),
       );
-      triggerAlert('Switcher has been created');
+      triggerAlert('Switcher has been edited');
     } else {
       dispatch(
         addSwitcher({
@@ -68,7 +68,7 @@ export const SwitcherCreationView = ({
           length: switcherLengthComputed,
         }),
       );
-      triggerAlert('Switcher has been edited');
+      triggerAlert('Switcher has been created');
     }
 
     onHide();
