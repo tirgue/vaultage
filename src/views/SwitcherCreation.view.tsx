@@ -132,7 +132,7 @@ export const SwitcherCreationView = ({
         <Button onClick={onHide} color="error">
           Cancel
         </Button>
-        <Button type="submit">Add</Button>
+        <Button type="submit">{defaultSwitcher ? 'Edit' : 'Add'}</Button>
       </DialogActions>
     </Dialog>
   );
