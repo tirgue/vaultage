@@ -1,4 +1,4 @@
-import { Delete, ExpandLess, ExpandMore } from '@mui/icons-material';
+import { Delete, Edit, ExpandLess, ExpandMore } from '@mui/icons-material';
 import {
   Box,
   Collapse,
@@ -19,6 +19,7 @@ export type GroupProps = {
   name: string;
   switchers: SwitchersProp;
   onDeleteSwitcher: (switchKey: string) => void;
+  onEditSwitcher: (switchKey: string) => void;
   onDeleteGroup: (groupName: string) => void;
   filter?: string;
   onCopy?: () => void;
@@ -28,6 +29,7 @@ export const Group = ({
   name,
   switchers,
   onDeleteSwitcher,
+  onEditSwitcher,
   onDeleteGroup,
   filter = '',
   onCopy,
@@ -109,7 +111,10 @@ export const Group = ({
                   }
                   sx={{ minWidth: 'initial' }}
                 />
-                <Box>
+                <Box display={'flex'} gap={1}>
+                  <IconButton onClick={() => onEditSwitcher(key)}>
+                    <Edit />
+                  </IconButton>
                   <IconButton onClick={() => handleDeleteSwitcher(key)}>
                     <Delete />
                   </IconButton>

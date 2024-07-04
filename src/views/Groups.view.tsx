@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '../state';
 import { deleteGroup, selectAllGroups } from '../state/groups.slice';
 import { selectMasterPassword } from '../state/master-password.slice';
 import { deleteSwitcher, selectAllSwitchers } from '../state/switchers.slice';
+import { SwitcherCreationView } from './SwitcherCreation.view';
 
 const NoScrollList = styled(List)({
   padding: 0,
@@ -21,6 +22,8 @@ const NoScrollList = styled(List)({
 export const GroupsView = () => {
   const [switchersProp, setSwitchersProp] = useState<SwitchersProp>([]);
   const [search, setSearch] = useState('');
+  const [switcherCreationView, setSwitcherCreationView] = useState(false);
+  const [switcherEditionKey, setSwitcherEditionKey] = useState('');
 
   const masterPassword = useAppSelector(selectMasterPassword);
   const groups = useAppSelector(selectAllGroups);
@@ -58,6 +61,11 @@ export const GroupsView = () => {
     triggerAlert('Switcher has been deleted');
   };
 
+  const handleEditSwitcher = (key: string) => {
+    setSwitcherEditionKey(key);
+    setSwitcherCreationView(true);
+  };
+
   const handleDeleteGroup = (name: string) => {
     dispatch(deleteGroup(name));
     triggerAlert('Group has been deleted');
@@ -84,6 +92,7 @@ export const GroupsView = () => {
               ({ groupName }) => group.name === groupName,
             )}
             onDeleteSwitcher={handleDeleteSwitcher}
+            onEditSwitcher={handleEditSwitcher}
             onDeleteGroup={handleDeleteGroup}
             filter={search}
             onCopy={handleCopy}
@@ -91,6 +100,13 @@ export const GroupsView = () => {
           />
         ))}
       </NoScrollList>
+      <SwitcherCreationView
+        visible={switcherCreationView}
+        onHide={() => setSwitcherCreationView(false)}
+        defaultSwitcher={switchers.find(
+          (switcher) => switcher.key === switcherEditionKey,
+        )}
+      />
     </>
   );
 };
