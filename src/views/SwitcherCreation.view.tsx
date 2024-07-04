@@ -84,7 +84,7 @@ export const SwitcherCreationView = ({
       maxWidth="xs"
       fullWidth={true}
     >
-      <DialogTitle>Add Switcher</DialogTitle>
+      <DialogTitle>{defaultSwitcher ? 'Edit' : 'Add'} Switcher</DialogTitle>
       <DialogContent>
         <Box display={'flex'} flexDirection={'column'} gap={2} pt={1}>
           <TextField
@@ -132,7 +132,7 @@ export const SwitcherCreationView = ({
         <Button onClick={onHide} color="error">
           Cancel
         </Button>
-        <Button type="submit">{defaultSwitcher ? 'Edit' : 'Add'}</Button>
+        <Button type="submit">{defaultSwitcher ? 'Save' : 'Add'}</Button>
       </DialogActions>
     </Dialog>
   );
