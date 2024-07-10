@@ -5,6 +5,8 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  FormControl,
+  InputLabel,
   MenuItem,
   Select,
   TextField,
@@ -101,22 +103,24 @@ export const SwitcherCreationView = ({
             fullWidth
             InputProps={{ readOnly: !!defaultSwitcher }}
           />
-          <Select
-            name="groupName"
-            defaultValue={defaultSwitcher?.groupName ?? ''}
-            size="small"
-            displayEmpty
-            fullWidth
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            {groups.map(({ id, name }) => (
-              <MenuItem key={id} value={id}>
-                {name}
+          <FormControl size="small" fullWidth>
+            <InputLabel>Group</InputLabel>
+            <Select
+              label="Group"
+              name="groupName"
+              defaultValue={defaultSwitcher?.groupName ?? ''}
+              size="small"
+            >
+              <MenuItem value="">
+                <em>None</em>
               </MenuItem>
-            ))}
-          </Select>
+              {groups.map(({ id, name }) => (
+                <MenuItem key={id} value={id}>
+                  {name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
           <TextField
             label="Password Length"
             name="switcherLength"
