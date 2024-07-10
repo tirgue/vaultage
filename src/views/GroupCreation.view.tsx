@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import { useAlertMessage } from '../hooks';
 import { useAppDispatch } from '../state';
-import { addGroup } from '../state/groups.slice';
+import { addGroup } from '../state/slices';
 
 export type GroupCreationViewProps = {
   visible: boolean;

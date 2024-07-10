@@ -1,7 +1,6 @@
 import { injectable } from 'inversify';
 import { store } from '../state';
-import { setGroupState } from '../state/groups.slice';
-import { setSwitcherState } from '../state/switchers.slice';
+import { setGroupState, setSwitcherState } from '../state/slices';
 
 @injectable()
 export class SharingService {

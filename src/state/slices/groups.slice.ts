@@ -1,7 +1,7 @@
 import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
-import { Group, SliceState } from '../types';
-import { selectAllIds, selectById } from './common-selector';
-import { getInitialState } from './get-initial-state';
+import { Group, SliceState } from '../../types';
+import { selectAllIds, selectById } from '../common-selector';
+import { getInitialState } from '../get-initial-state';
 
 const initialState: SliceState<Group> = getInitialState('group');
 
@@ -29,7 +29,10 @@ export const groupSlice = createSlice({
     selectAllGroups: createSelector(
       selectById<Group>,
       selectAllIds<Group>,
-      (byId, allIds) => allIds.map((id) => byId[id]),
+      (byId, allIds) =>
+        allIds
+          .map((id) => byId[id])
+          .sort((g1, g2) => (g1.name < g2.name ? -1 : 1)),
     ),
   },
 });
@@ -37,4 +40,4 @@ export const groupSlice = createSlice({
 export const { addGroup, deleteGroup, setGroupState } = groupSlice.actions;
 export const { selectAllGroups } = groupSlice.selectors;
 
-export default groupSlice.reducer;
+export const groupReducer = groupSlice.reducer;

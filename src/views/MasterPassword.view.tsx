@@ -2,10 +2,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Box, IconButton, TextField } from '@mui/material';
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../state';
-import {
-  selectMasterPassword,
-  setMasterPassword,
-} from '../state/master-password.slice';
+import { selectMasterPassword, setMasterPassword } from '../state/slices';
 
 export const MasterPasswordView = () => {
   const [visible, setVisible] = useState(false);

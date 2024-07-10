@@ -4,9 +4,13 @@ import { Group, SwitchersProp } from '../components';
 import { useAlertMessage, useInjection } from '../hooks';
 import { PassGeneratorService } from '../services';
 import { useAppDispatch, useAppSelector } from '../state';
-import { deleteGroup, selectAllGroups } from '../state/groups.slice';
-import { selectMasterPassword } from '../state/master-password.slice';
-import { deleteSwitcher, selectAllSwitchers } from '../state/switchers.slice';
+import {
+  deleteGroup,
+  deleteSwitcher,
+  selectAllGroups,
+  selectAllSwitchers,
+  selectMasterPassword,
+} from '../state/slices';
 import { SwitcherCreationView } from './SwitcherCreation.view';
 
 const NoScrollList = styled(List)({

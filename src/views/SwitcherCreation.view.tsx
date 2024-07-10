@@ -11,8 +11,7 @@ import {
 } from '@mui/material';
 import { useAlertMessage } from '../hooks';
 import { useAppDispatch, useAppSelector } from '../state';
-import { selectAllGroups } from '../state/groups.slice';
-import { addSwitcher, editSwitcher } from '../state/switchers.slice';
+import { addSwitcher, editSwitcher, selectAllGroups } from '../state/slices';
 import { Switcher } from '../types';
 
 export type SwitcherCreationViewProps = {

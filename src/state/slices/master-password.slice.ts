@@ -19,4 +19,4 @@ export const masterPasswordSlice = createSlice({
 export const { setMasterPassword } = masterPasswordSlice.actions;
 export const { selectMasterPassword } = masterPasswordSlice.selectors;
 
-export default masterPasswordSlice.reducer;
+export const masterPasswordReducer = masterPasswordSlice.reducer;

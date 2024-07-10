@@ -1,8 +1,6 @@
 import { configureStore, createListenerMiddleware } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
-import groupReducer from './groups.slice';
-import masterPasswordReducer from './master-password.slice';
-import switcherReducer from './switchers.slice';
+import { groupReducer, masterPasswordReducer, switcherReducer } from './slices';
 
 const saveToStorageMiddleware = createListenerMiddleware();
 
