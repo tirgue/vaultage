@@ -1,9 +1,4 @@
-import {
-  ContentCopy,
-  Delete,
-  Visibility,
-  VisibilityOff,
-} from '@mui/icons-material';
+import { ContentCopy, Visibility, VisibilityOff } from '@mui/icons-material';
 import {
   Box,
   Card,
@@ -17,6 +12,7 @@ import {
 import { useEffect, useMemo, useState } from 'react';
 import { useInjection } from '../../hooks';
 import { PassGeneratorService } from '../../services';
+import { TrashButton } from '../TrashButton';
 
 export type SwitcherProps = {
   name: string;
@@ -70,9 +66,7 @@ export const Switcher = ({
           <ListItem sx={{ p: 1 }}>
             <Box display={'flex'} gap={1} alignItems={'center'}>
               <Typography variant="h5">{name}</Typography>
-              <IconButton onClick={() => onDeleteSwitch(switcherKey)}>
-                <Delete />
-              </IconButton>
+              <TrashButton onDelete={() => onDeleteSwitch(switcherKey)} />
             </Box>
           </ListItem>
           <ListItem sx={{ p: 1 }}>

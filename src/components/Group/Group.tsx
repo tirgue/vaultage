@@ -1,4 +1,4 @@
-import { Delete, Edit, ExpandLess, ExpandMore } from '@mui/icons-material';
+import { Edit, ExpandLess, ExpandMore } from '@mui/icons-material';
 import {
   Box,
   Collapse,
@@ -12,6 +12,7 @@ import {
 import { useMemo, useState } from 'react';
 import { Switcher } from '../../types';
 import { PasswordViewer } from '../PasswordViewer';
+import { TrashButton } from '../TrashButton';
 
 export type SwitchersProp = Array<Switcher & { generatedPassword: string }>;
 
@@ -71,9 +72,7 @@ export const Group = ({
             </Box>
           }
         />
-        <IconButton onClick={() => handleDeleteGroup(name)}>
-          <Delete />
-        </IconButton>
+        <TrashButton onDelete={() => handleDeleteGroup(name)} />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={open}>
@@ -115,9 +114,7 @@ export const Group = ({
                   <IconButton onClick={() => onEditSwitcher(key)}>
                     <Edit />
                   </IconButton>
-                  <IconButton onClick={() => handleDeleteSwitcher(key)}>
-                    <Delete />
-                  </IconButton>
+                  <TrashButton onDelete={() => handleDeleteSwitcher(key)} />
                 </Box>
               </Box>
               <PasswordViewer
