@@ -1,102 +1,65 @@
-import { ContentCopy, Visibility, VisibilityOff } from '@mui/icons-material';
+import { Edit } from '@mui/icons-material';
 import {
   Box,
-  Card,
-  CardContent,
   IconButton,
-  List,
   ListItem,
-  TextField,
+  ListItemText,
   Typography,
 } from '@mui/material';
-import { useEffect, useMemo, useState } from 'react';
-import { useInjection } from '../../hooks';
-import { PassGeneratorService } from '../../services';
+import { PasswordViewer } from '../PasswordViewer';
 import { TrashButton } from '../TrashButton';
 
 export type SwitcherProps = {
   name: string;
   switcherKey: string;
   length: number;
-  masterPassword?: string;
-  onDeleteSwitch: (switchKey: string) => void;
+  generatedPassword?: string;
+  onDeleteSwitcher: (switchKey: string) => void;
+  onEditSwitcher: (switchKey: string) => void;
+  onCopy?: () => void;
 };
 
 export const Switcher = ({
   length,
   name,
   switcherKey,
-  masterPassword = '',
-  onDeleteSwitch,
+  generatedPassword = '',
+  onDeleteSwitcher,
+  onEditSwitcher,
+  onCopy,
 }: SwitcherProps) => {
-  const [generatedPassword, setGeneratedPassword] = useState('');
-  const [visible, setVisible] = useState(false);
-
-  const passGeneratorService = useInjection(PassGeneratorService);
-
-  const generatedPasswordVisual = useMemo(
-    () =>
-      visible
-        ? generatedPassword
-        : Array(generatedPassword.length).fill('•').join(''),
-    [generatedPassword, visible],
-  );
-
-  useEffect(() => {
-    const fn = async () => {
-      const generatedPassword = await passGeneratorService.generatePassword(
-        masterPassword,
-        switcherKey,
-        length,
-      );
-
-      setGeneratedPassword(generatedPassword);
-    };
-
-    fn();
-  }, [length, masterPassword, passGeneratorService, switcherKey]);
-
-  const handleCopyPassword = () => {
-    navigator.clipboard.writeText(generatedPassword).catch(console.error);
-  };
   return (
-    <Card>
-      <CardContent>
-        <List>
-          <ListItem sx={{ p: 1 }}>
-            <Box display={'flex'} gap={1} alignItems={'center'}>
-              <Typography variant="h5">{name}</Typography>
-              <TrashButton onDelete={() => onDeleteSwitch(switcherKey)} />
-            </Box>
-          </ListItem>
-          <ListItem sx={{ p: 1 }}>
-            <Typography>&bull; Key : {switcherKey}</Typography>
-          </ListItem>
-          <ListItem sx={{ p: 1 }}>
-            <Typography>&bull; Length : {length}</Typography>
-          </ListItem>
-          <ListItem sx={{ p: 1 }}>
-            <Box display={'flex'} gap={1} alignItems={'center'} width="100%">
-              <IconButton onClick={handleCopyPassword}>
-                <ContentCopy />
-              </IconButton>
-              <IconButton onClick={() => setVisible((v) => !v)}>
-                {visible ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-              <TextField
-                size="small"
-                margin="dense"
-                sx={{ input: { cursor: 'pointer' } }}
-                fullWidth
-                InputProps={{ readOnly: true }}
-                InputLabelProps={{ style: { fontFamily: 'monospace' } }}
-                value={generatedPasswordVisual}
-                onClick={handleCopyPassword}
-              />
-            </Box>
-          </ListItem>
-        </List>
-      </CardContent>
-    </Card>
+    <ListItem component={Box} flexDirection={'column'}>
+      <Box display={'flex'} alignItems={'center'} width="100%">
+        <ListItemText
+          primary={
+            <Typography whiteSpace="nowrap" width="fit-content">
+              {name}
+            </Typography>
+          }
+          secondary={
+            <Typography
+              variant="body2"
+              whiteSpace="nowrap"
+              width="fit-content"
+              sx={{
+                fontStyle: 'italic',
+                fontFamily: 'Ubuntu Sans Mono',
+              }}
+            >
+              {switcherKey} - {length}
+            </Typography>
+          }
+          sx={{ minWidth: 'initial' }}
+        />
+        <Box display={'flex'} gap={1}>
+          <IconButton onClick={() => onEditSwitcher(switcherKey)}>
+            <Edit />
+          </IconButton>
+          <TrashButton onDelete={() => onDeleteSwitcher(switcherKey)} />
+        </Box>
+      </Box>
+      <PasswordViewer generatedPassword={generatedPassword} onCopy={onCopy} />
+    </ListItem>
   );
 };

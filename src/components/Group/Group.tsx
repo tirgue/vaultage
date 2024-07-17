@@ -1,8 +1,7 @@
-import { Edit, ExpandLess, ExpandMore } from '@mui/icons-material';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import {
   Box,
   Collapse,
-  IconButton,
   List,
   ListItem,
   ListItemButton,
@@ -11,7 +10,7 @@ import {
 } from '@mui/material';
 import { useMemo, useState } from 'react';
 import { Switcher } from '../../types';
-import { PasswordViewer } from '../PasswordViewer';
+import { Switcher as SwitcherComponent } from '../Switcher';
 import { TrashButton } from '../TrashButton';
 
 export type SwitchersProp = Array<Switcher & { generatedPassword: string }>;
@@ -45,14 +44,6 @@ export const Group = ({
     [filter, switchers],
   );
 
-  const handleDeleteGroup = (name: string) => {
-    onDeleteGroup(name);
-  };
-
-  const handleDeleteSwitcher = (id: string) => {
-    onDeleteSwitcher(id);
-  };
-
   return (
     <>
       <ListItemButton
@@ -72,7 +63,7 @@ export const Group = ({
             </Box>
           }
         />
-        <TrashButton onDelete={() => handleDeleteGroup(name)} />
+        <TrashButton onDelete={() => onDeleteGroup(name)} />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={open}>
@@ -86,42 +77,15 @@ export const Group = ({
               </Typography>
             </ListItem>
           ) : null}
-          {filteredSwitchers.map(({ key, length, name, generatedPassword }) => (
-            <ListItem key={key} component={Box} flexDirection={'column'}>
-              <Box display={'flex'} alignItems={'center'} width="100%">
-                <ListItemText
-                  primary={
-                    <Typography whiteSpace="nowrap" width="fit-content">
-                      {name}
-                    </Typography>
-                  }
-                  secondary={
-                    <Typography
-                      variant="body2"
-                      whiteSpace="nowrap"
-                      width="fit-content"
-                      sx={{
-                        fontStyle: 'italic',
-                        fontFamily: 'Ubuntu Sans Mono',
-                      }}
-                    >
-                      {key} - {length}
-                    </Typography>
-                  }
-                  sx={{ minWidth: 'initial' }}
-                />
-                <Box display={'flex'} gap={1}>
-                  <IconButton onClick={() => onEditSwitcher(key)}>
-                    <Edit />
-                  </IconButton>
-                  <TrashButton onDelete={() => handleDeleteSwitcher(key)} />
-                </Box>
-              </Box>
-              <PasswordViewer
-                generatedPassword={generatedPassword}
-                onCopy={onCopy}
-              />
-            </ListItem>
+          {filteredSwitchers.map((switcher) => (
+            <SwitcherComponent
+              {...switcher}
+              key={switcher.key}
+              switcherKey={switcher.key}
+              onDeleteSwitcher={onDeleteSwitcher}
+              onEditSwitcher={onEditSwitcher}
+              onCopy={onCopy}
+            />
           ))}
         </List>
       </Collapse>
