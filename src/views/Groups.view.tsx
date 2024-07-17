@@ -14,13 +14,14 @@ import {
 import { SwitcherCreationView } from './SwitcherCreation.view';
 
 const NoScrollList = styled(List)({
-  padding: 0,
   overflow: 'auto',
   '-ms-overflow-style': 'none',
   'scrollbar-width': 'none',
   '::-webkit-scrollbar': {
     display: 'none',
   },
+  backgroundColor: '#161616',
+  borderRadius: '4px',
 });
 
 export const GroupsView = () => {
@@ -88,7 +89,7 @@ export const GroupsView = () => {
         label="Search"
         fullWidth
       ></TextField>
-      <NoScrollList sx={{ pb: 3 }}>
+      <NoScrollList>
         {groups.map((group) => (
           <Group
             key={group.id}

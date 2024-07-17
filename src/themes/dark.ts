@@ -3,6 +3,9 @@ import { createTheme } from '@mui/material';
 export const darkTheme = createTheme({
   palette: {
     mode: 'dark',
+    background: {
+      default: '#111',
+    },
     primary: {
       main: '#4182d9',
     },
@@ -28,5 +31,14 @@ export const darkTheme = createTheme({
   typography: {
     fontSize: 12,
     fontWeightLight: 300,
+  },
+  components: {
+    MuiListItem: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#202020',
+        },
+      },
+    },
   },
 });
