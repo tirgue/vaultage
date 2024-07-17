@@ -15,11 +15,12 @@ const BoxArrow = styled(Box)({
     content: '""',
     position: 'absolute',
     backgroundColor: '#2f2f2f',
-    top: '-0.4em',
+    top: 'calc(50% - 6px)',
+    right: '-0.4em',
     height: '0.8em',
     width: '0.8em',
     rotate: '45deg',
-    borderRadius: '0.1em 0 0 0',
+    borderRadius: '0em 0.1em 0 50%',
   },
 });
 
@@ -55,21 +56,21 @@ export const TrashButton = ({ onDelete }: TrashButtonProps) => {
         onClose={handleCloseDelete}
         anchorEl={ref.current}
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
+          vertical: 'center',
+          horizontal: 'left',
         }}
         transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
+          vertical: 'center',
+          horizontal: 'right',
         }}
         slotProps={{
           paper: {
             style: {
               overflow: 'visible',
+              translate: '-8px',
             },
           },
         }}
-        sx={{ mt: 1 }}
       >
         <BoxArrow
           display={'flex'}
