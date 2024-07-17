@@ -1,6 +1,27 @@
 import { Delete } from '@mui/icons-material';
-import { Box, Button, IconButton, Popover, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  IconButton,
+  Popover,
+  Typography,
+  styled,
+} from '@mui/material';
 import { useRef, useState } from 'react';
+
+const BoxArrow = styled(Box)({
+  position: 'relative',
+  ':after': {
+    content: '""',
+    position: 'absolute',
+    backgroundColor: '#2f2f2f',
+    top: '-0.4em',
+    height: '0.8em',
+    width: '0.8em',
+    rotate: '45deg',
+    borderRadius: '0.1em 0 0 0',
+  },
+});
 
 export type TrashButtonProps = {
   onDelete: () => void;
@@ -41,12 +62,20 @@ export const TrashButton = ({ onDelete }: TrashButtonProps) => {
           vertical: 'top',
           horizontal: 'center',
         }}
+        slotProps={{
+          paper: {
+            style: {
+              overflow: 'visible',
+            },
+          },
+        }}
+        sx={{ mt: 1 }}
       >
-        <Box
+        <BoxArrow
           display={'flex'}
           flexDirection={'column'}
           alignItems={'center'}
-          m={1}
+          p={1}
           gap={1}
         >
           <Typography>Are you sure ?</Typography>
@@ -63,7 +92,7 @@ export const TrashButton = ({ onDelete }: TrashButtonProps) => {
               Yes
             </Button>
           </Box>
-        </Box>
+        </BoxArrow>
       </Popover>
     </>
   );
