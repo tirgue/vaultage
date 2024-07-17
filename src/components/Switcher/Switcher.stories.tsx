@@ -14,6 +14,6 @@ export const Default: Story = {
     length: 15,
     name: 'Switcher Name',
     switcherKey: 'switcher-key',
-    masterPassword: 'masterPassword',
+    generatedPassword: 'generatedPassword',
   },
 };
